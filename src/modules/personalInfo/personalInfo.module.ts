@@ -5,4 +5,4 @@ import { PersonalInfoService } from "./personalInfo.service";
     controllers: [PersonalInfoController],
     providers: [PersonalInfoService],
 })
-export class PersonalInfoModules { }
+export class PersonalInfoModule { }

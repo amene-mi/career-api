@@ -5,4 +5,4 @@ import { ExperiencesService } from "./experiences.service";
     controllers: [ExperiencesController],
     providers: [ExperiencesService],
 })
-export class personalInfoModules { }
+export class ExperiencesModule { }

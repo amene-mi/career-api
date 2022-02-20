@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { empty } from 'rxjs';
 import { PersonalInfo } from './personalInfo.model';
 
 @Injectable()
@@ -35,7 +34,7 @@ export class PersonalInfoService {
             address,
             photo,
             CV_File,
-            experiences || [],
+            experiences,
             educations,
             certifications);
         this.personalInfos.push(newPerson);
