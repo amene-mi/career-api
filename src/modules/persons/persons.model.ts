@@ -1,6 +1,4 @@
-import { Education } from "../educations/education.model";
-
-export class PersonalInfo{
+export class Persons{
     constructor(
         public id: string,
         public firstName: string,
@@ -13,9 +11,6 @@ export class PersonalInfo{
         public aboutUs: string,
         public address: string,
         public photo: string,
-        public CV_File: string,
-        public experiences?: [],
-        public educations?: Array<Education>,
-        public certifications?: [],
+        public resume: string,
     ){}
 }

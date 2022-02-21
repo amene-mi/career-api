@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PersonalInfo } from './personalInfo.model';
+import { Persons } from './persons.model';
 
 @Injectable()
-export class PersonalInfoService {
-    personalInfos: PersonalInfo[] = [];
+export class PersonsService {
+    persons: Persons[] = [];
 
-    insertPersonalInfo(
+    insertPersons(
         firstName: string,
         lastName: string,
         gender: Int8Array,
@@ -16,12 +16,9 @@ export class PersonalInfoService {
         aboutUs: string,
         address: string,
         photo: string,
-        CV_File: string,
-        experiences: [],
-        educations: [],
-        certifications: []) {
+        resume: string,) {
         const infoId = Math.random().toString();
-        const newPerson = new PersonalInfo(
+        const newPerson = new Persons(
             infoId,
             firstName,
             lastName,
@@ -33,24 +30,21 @@ export class PersonalInfoService {
             aboutUs,
             address,
             photo,
-            CV_File,
-            experiences,
-            educations,
-            certifications);
-        this.personalInfos.push(newPerson);
+            resume,);
+        this.persons.push(newPerson);
         return infoId;
     }
 
-    getPersonalInfo() {
-        return [...this.personalInfos];
+    getPersons() {
+        return [...this.persons];
     }
 
-    getSinglePersonalInfo(infoId: string) {
-        const personalInfo = this.findPersonalInfo(infoId)[0];
+    getSinglePersons(infoId: string) {
+        const personalInfo = this.findPersons(infoId)[0];
         return { ...personalInfo };
     }
 
-    updatePersonalInfo(
+    updatePersons(
         id: string,
         firstName: string,
         lastName: string,
@@ -62,11 +56,8 @@ export class PersonalInfoService {
         aboutUs: string,
         address: string,
         photo: string,
-        CV_File: string,
-        experiences: [],
-        educations: [],
-        certifications: []) {
-        const [personalInfo, index] = this.findPersonalInfo(id);
+        resume: string,) {
+        const [personalInfo, index] = this.findPersons(id);
         const updatedInfo = { ...personalInfo };
         //validator
         if (firstName) {
@@ -83,22 +74,19 @@ export class PersonalInfoService {
         updatedInfo.aboutUs = aboutUs;
         updatedInfo.address = address;
         updatedInfo.photo = photo;
-        updatedInfo.CV_File = CV_File;
-        updatedInfo.experiences = experiences;
-        updatedInfo.educations = educations;
-        updatedInfo.certifications = certifications;
+        updatedInfo.resume = resume;
 
-        this.personalInfos[index] = updatedInfo;
+        this.persons[index] = updatedInfo;
     }
 
-    deletePersonalInfo(infoId: string) {
-        const index = this.findPersonalInfo(infoId)[1];
-        this.personalInfos.splice(index, 1);
+    deletePersons(infoId: string) {
+        const index = this.findPersons(infoId)[1];
+        this.persons.splice(index, 1);
     }
 
-    private findPersonalInfo(id: string): [PersonalInfo, number] {
-        const infoIndex = this.personalInfos.findIndex((p) => p.id === id);
-        const info = this.personalInfos[infoIndex];
+    private findPersons(id: string): [Persons, number] {
+        const infoIndex = this.persons.findIndex((p) => p.id === id);
+        const info = this.persons[infoIndex];
         if (!info) {
             throw new NotFoundException('Could not find personal Information.!');
         }

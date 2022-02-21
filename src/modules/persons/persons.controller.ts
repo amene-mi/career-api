@@ -1,12 +1,12 @@
 import { Controller, Post, Body, Get, Param, Patch, Delete } from '@nestjs/common';
-import { PersonalInfoService } from './personalInfo.service';
+import { PersonsService } from './persons.service';
 
-@Controller('personalInfo')
-export class PersonalInfoController {
-    constructor(private readonly personalInfoService: PersonalInfoService) { }
+@Controller('persons')
+export class PersonsController {
+    constructor(private readonly personsService: PersonsService) { }
 
     @Post()
-    addPersonalInfo(
+    addPersons(
         @Body('firstName') infoFirstName: string,
         @Body('lastName') infoLastName: string,
         @Body('gender') infoGender: Int8Array,
@@ -17,12 +17,9 @@ export class PersonalInfoController {
         @Body('aboutUs') infoAboutUs: string,
         @Body('address') infoAddress: string,
         @Body('photo') infoPhoto: string,
-        @Body('CV_File') infoCV_File: string,
-        @Body('experiences') infoExperiences: [],
-        @Body('educations') infoEducations: [],
-        @Body('certifications') infoCertifications: [],
+        @Body('resume') infoResume: string,
     ) {
-        const generatedId = this.personalInfoService.insertPersonalInfo(
+        const generatedId = this.personsService.insertPersons(
             infoFirstName,
             infoLastName,
             infoGender,
@@ -33,26 +30,23 @@ export class PersonalInfoController {
             infoAboutUs,
             infoAddress,
             infoPhoto,
-            infoCV_File,
-            infoExperiences,
-            infoEducations,
-            infoCertifications
+            infoResume,
         );
         return { id: generatedId }
     }
 
     @Get()
-    getAllPerasonal() {
-        return this.personalInfoService.getPersonalInfo();
+    getAllPersons() {
+        return this.personsService.getPersons();
     }
 
     @Get(':id')
-    getPersonalInfo(@Param('id') infoId: string) {
-        return this.personalInfoService.getSinglePersonalInfo(infoId);
+    getPersons(@Param('id') infoId: string) {
+        return this.personsService.getSinglePersons(infoId);
     }
 
     @Patch(':id')
-    updatePersonalInfo(
+    updatePersons(
         @Param('id') infoId: string,
         @Body('firstName') infoFirstName: string,
         @Body('lastName') infoLastName: string,
@@ -64,12 +58,9 @@ export class PersonalInfoController {
         @Body('aboutUs') infoAboutUs: string,
         @Body('address') infoAddress: string,
         @Body('photo') infoPhoto: string,
-        @Body('CV_File') infoCV_File: string,
-        @Body('experiences') infoExperiences: [],
-        @Body('educations') infoEducations: [],
-        @Body('certifications') infoCertifications: [],
+        @Body('resume') infoResume: string,
     ) {
-        this.personalInfoService.updatePersonalInfo(
+        this.personsService.updatePersons(
             infoId,
             infoFirstName,
             infoLastName,
@@ -81,16 +72,13 @@ export class PersonalInfoController {
             infoAboutUs,
             infoAddress,
             infoPhoto,
-            infoCV_File,
-            infoExperiences,
-            infoEducations,
-            infoCertifications);
+            infoResume,);
         return null;
     }
 
     @Delete(':id')
-    removePersonalInfo(@Param('id') infoId: string) {
-        this.personalInfoService.deletePersonalInfo(infoId);
+    removePersons(@Param('id') infoId: string) {
+        this.personsService.deletePersons(infoId);
         return null;
     }
 }
