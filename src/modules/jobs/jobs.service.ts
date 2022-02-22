@@ -1,29 +1,34 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { check } from 'prettier';
-import { Job } from './job.model';
+import { Job } from './job.entity';
+import {Repository} from "typeorm";
+import {InjectRepository} from "@nestjs/typeorm";
 
 @Injectable()
 export class JobsService {
-    jobs: Job[] = [];
+    constructor(
+        @InjectRepository(Job) private readonly jobRepository: Repository<Job>
+    ) {
+    }
+   // jobs: Job[] = [];
 
     insertJob(
         title: string,
         location: string,
         type: string,
-        description: string) {
+        description: string){
         const jobId = Math.random().toString();
-        const newJob = new Job(
+      /*  const newJob = new Job(
             jobId,
             title,
             location,
             type,
-            description);
-        this.jobs.push(newJob);
+            description);*/
+        this.jobRepository.create();
         return jobId;
     }
 
     getJobs() {
-        return [...this.jobs];
+        return [...this.jobRepository];
     }
 
     getSingleJob(jobId: string) {
@@ -48,12 +53,12 @@ export class JobsService {
         updatedJob.type = type;
         updatedJob.description = description;
        
-        this.jobs[index] = updatedJob;
+        this.jobRepository[index] = updatedJob;
     }
 
     deleteJob(jobId: string) {
         const index = this.findJob(jobId)[1];
-        this.jobs.splice(index, 1);
+        this.jobRepository.splice(index, 1);
     }
 
     private findJob(id: string): [Job, number] {
